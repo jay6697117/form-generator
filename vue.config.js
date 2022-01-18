@@ -1,24 +1,25 @@
 const path = require('path')
 
-const minify = process.env.NODE_ENV === 'development' ? false : {
-  collapseWhitespace: true,
-  removeComments: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  useShortDoctype: true,
-  minifyCSS: true,
-  minifyJS: true
-}
+const minify = process.env.NODE_ENV === 'development'
+  ? false
+  : {
+    collapseWhitespace: true,
+    removeComments: true,
+    removeRedundantAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    useShortDoctype: true,
+    minifyCSS: true,
+    minifyJS: true
+  }
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/form-generator/'
-    : '/',
+  // publicPath: process.env.NODE_ENV === 'production' ? '/form-generator/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/' : './',
   pages: {
     index: {
       entry: 'src/views/index/main.js',
@@ -48,10 +49,7 @@ module.exports = {
   },
   chainWebpack(config) {
     // set svg-sprite-loader
-    config.module
-      .rule('svg')
-      .exclude.add(resolve('src/icons'))
-      .end()
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
     config.module
       .rule('icons')
       .test(/\.svg$/)
